@@ -6,23 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("./users.service");
-const users_controller_1 = require("./users.controller");
-const mongoose_1 = require("@nestjs/mongoose");
-const users_model_1 = require("./users.model");
-let UsersModule = class UsersModule {
+const passport_1 = require("@nestjs/passport");
+const users_module_1 = require("../users/users.module");
+const auth_service_1 = require("./auth.service");
+const local_strategy_1 = require("./local.strategy");
+const session_serializer_1 = require("./session.serializer");
+let AuthModule = class AuthModule {
 };
-UsersModule = __decorate([
+AuthModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: users_model_1.UserSchema }])
-        ],
-        providers: [users_service_1.UsersService],
-        controllers: [users_controller_1.UsersController],
-        exports: [users_service_1.UsersService],
+        imports: [users_module_1.UsersModule, passport_1.PassportModule.register({ session: true })],
+        providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy, session_serializer_1.SessionSerializer],
     })
-], UsersModule);
-exports.UsersModule = UsersModule;
-//# sourceMappingURL=users.module.js.map
+], AuthModule);
+exports.AuthModule = AuthModule;
+//# sourceMappingURL=auth.module.js.map

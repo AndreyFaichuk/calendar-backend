@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const mongoose_1 = require("@nestjs/mongoose");
 const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -20,7 +21,8 @@ AppModule = __decorate([
                 envFilePath: '.env'
             }),
             mongoose_1.MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.uvp2e.mongodb.net/?retryWrites=true&w=majority`),
-            users_module_1.UsersModule
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule
         ],
         controllers: [],
         providers: [],
