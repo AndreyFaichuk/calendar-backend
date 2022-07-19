@@ -1,4 +1,4 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import { Injectable, Logger, NotAcceptableException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 import { UsersService } from 'src/users/users.service';

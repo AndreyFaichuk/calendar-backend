@@ -3,7 +3,7 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     addUser(userPassword: string, userName: string, userEmail: string): Promise<{
-        msg: string;
+        message: string;
         userId: any;
         username: string;
         email: string;

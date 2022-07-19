@@ -7,6 +7,7 @@ import { LocalAuthGuard } from '../auth/local.auth.guard';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+  
   //post /registration
   @Post('/registration')
   async addUser(
@@ -24,7 +25,7 @@ export class UsersController {
     );
 
     return {
-      msg: 'User successfully registered',
+      message: 'Successfully registered!',
       userId: result.id,
       username: result.username,
       email: result.email

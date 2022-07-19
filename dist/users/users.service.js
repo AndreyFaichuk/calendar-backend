@@ -16,24 +16,29 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const registered_exception_1 = require("../exceptions/registered.exception");
 let UsersService = class UsersService {
     constructor(userModel) {
         this.userModel = userModel;
-    }
-    async insertUser(userName, password, email) {
-        const username = userName.toLowerCase();
-        const newUser = new this.userModel({
-            username,
-            password,
-            email
-        });
-        await newUser.save();
-        return newUser;
     }
     async getUser(userName) {
         const username = userName.toLowerCase();
         const user = await this.userModel.findOne({ username });
         return user;
+    }
+    async insertUser(userName, password, email) {
+        const username = userName.toLowerCase();
+        const potentialUser = await this.getUser(username);
+        if (!potentialUser) {
+            const newUser = new this.userModel({
+                username,
+                password,
+                email
+            });
+            await newUser.save();
+            return newUser;
+        }
+        throw new registered_exception_1.RegisteredException();
     }
 };
 UsersService = __decorate([

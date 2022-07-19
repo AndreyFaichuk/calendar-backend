@@ -27,7 +27,7 @@ let UsersController = class UsersController {
         const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(userName, hashedPassword, userEmail);
         return {
-            msg: 'User successfully registered',
+            message: 'Successfully registered!',
             userId: result.id,
             username: result.username,
             email: result.email
