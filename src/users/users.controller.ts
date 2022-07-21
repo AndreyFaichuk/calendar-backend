@@ -25,36 +25,29 @@ export class UsersController {
     );
 
     return {
-      message: 'Successfully registered!',
-      userId: result.id,
-      username: result.username,
-      email: result.email
+      message: 'Successfully registered! Login now'
     };
   }
 
   @UseGuards(LocalAuthGuard)
-
   //post /login
   @Post('/login')
   login(@Request() req): any {
-    return {
-        User: req.user,
-        msg: 'User logged in'
-    };
+    return req.user
   }
 
-   //get /protected
-   @UseGuards(AuthenticatedGuard)
-   @Get('/protected')
-   getHello(@Request() req): string {
-     return req.user;
-   }
+  //get /protected
+  @UseGuards(AuthenticatedGuard)
+  @Get('/protected')
+  getHello(@Request() req): string {
+    return 'protected';
+  }
 
-     //get / logout
-     @Get('/logout')
-     logout(@Request() req): any {
-       req.session.destroy();
-       return { msg: 'The user session has ended' }
-    }
+  //get / logout
+  @Get('/logout')
+  logout(@Request() req): any {
+    req.session.destroy();
+    return { msg: 'The user session has ended' }
+}
 
 }

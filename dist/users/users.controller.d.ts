@@ -4,9 +4,6 @@ export declare class UsersController {
     constructor(usersService: UsersService);
     addUser(userPassword: string, userName: string, userEmail: string): Promise<{
         message: string;
-        userId: any;
-        username: string;
-        email: string;
     }>;
     login(req: any): any;
     getHello(req: any): string;

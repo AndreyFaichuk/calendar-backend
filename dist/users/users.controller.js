@@ -27,20 +27,14 @@ let UsersController = class UsersController {
         const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(userName, hashedPassword, userEmail);
         return {
-            message: 'Successfully registered!',
-            userId: result.id,
-            username: result.username,
-            email: result.email
+            message: 'Successfully registered! Login now'
         };
     }
     login(req) {
-        return {
-            User: req.user,
-            msg: 'User logged in'
-        };
+        return req.user;
     }
     getHello(req) {
-        return req.user;
+        return 'protected';
     }
     logout(req) {
         req.session.destroy();

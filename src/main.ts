@@ -6,12 +6,21 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 5000;
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    allowedHeaders: ['content-type'],
+    origin: 'http://localhost:3000',
+    credentials: true,
+  });
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60,
+        httpOnly: false
+      },
+      saveUninitialized: true
+      
     })
   )
   app.use(passport.initialize())

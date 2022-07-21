@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
+const login_exception_1 = require("../exceptions/login.exception");
 const users_service_1 = require("../users/users.service");
 let AuthService = class AuthService {
     constructor(usersService) {
@@ -19,19 +20,18 @@ let AuthService = class AuthService {
     }
     async validateUser(username, password) {
         const user = await this.usersService.getUser(username);
+        if (!user)
+            throw new login_exception_1.LoginException();
         const passwordValid = await bcrypt.compare(password, user.password);
-        if (!user) {
-            throw new common_1.NotAcceptableException('could not find the user');
-        }
-        ;
         if (user && passwordValid) {
             return {
                 userId: user.id,
                 username: user.username,
-                email: user.email
+                email: user.email,
+                message: 'User successfully logged in!'
             };
         }
-        return null;
+        throw new login_exception_1.LoginException();
     }
 };
 AuthService = __decorate([
