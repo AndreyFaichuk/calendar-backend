@@ -24,9 +24,7 @@ export class UsersController {
       userEmail
     );
 
-    return {
-      message: 'Successfully registered! Login now'
-    };
+    return { message:'Successfully registered! Login now' }
   }
 
   @UseGuards(LocalAuthGuard)
@@ -47,7 +45,7 @@ export class UsersController {
   @Get('/logout')
   logout(@Request() req): any {
     req.session.destroy();
-    return { msg: 'The user session has ended' }
+    return { message: 'The session has ended' }
 }
 
 }

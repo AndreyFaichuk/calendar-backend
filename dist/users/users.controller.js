@@ -26,9 +26,7 @@ let UsersController = class UsersController {
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(userName, hashedPassword, userEmail);
-        return {
-            message: 'Successfully registered! Login now'
-        };
+        return { message: 'Successfully registered! Login now' };
     }
     login(req) {
         return req.user;
@@ -38,7 +36,7 @@ let UsersController = class UsersController {
     }
     logout(req) {
         req.session.destroy();
-        return { msg: 'The user session has ended' };
+        return { message: 'The session has ended' };
     }
 };
 __decorate([

@@ -18,7 +18,8 @@ async function bootstrap() {
             maxAge: 1000 * 60 * 60,
             httpOnly: false
         },
-        saveUninitialized: true
+        saveUninitialized: true,
+        resave: true
     }));
     app.use(passport.initialize());
     app.use(passport.session());
