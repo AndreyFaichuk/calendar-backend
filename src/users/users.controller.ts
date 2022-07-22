@@ -34,14 +34,11 @@ export class UsersController {
     return req.user
   }
 
-  //post /verify
+  //Get / protected
   @UseGuards(AuthenticatedGuard)
-  @Post('/verify')
-  async getHello(
-    @Request() req,
-    @Body('username') userName: string) {
-
-    return await this.usersService.getVerifiedUser(userName)
+  @Get('/protected')
+  getHello(@Request() req): string {
+    return req.user;
   }
 
   //get / logout

@@ -28,7 +28,7 @@ let AuthService = class AuthService {
                 userId: user.id,
                 username: user.username,
                 email: user.email,
-                message: 'User successfully logged in!'
+                message: 'You successfully logged in!'
             };
         }
         throw new login_exception_1.LoginException();

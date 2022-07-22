@@ -6,8 +6,6 @@ export declare class UsersController {
         message: string;
     }>;
     login(req: any): any;
-    getHello(req: any, userName: string): Promise<(import("./users.model").User & {
-        _id: import("mongoose").Types.ObjectId;
-    })[]>;
+    getHello(req: any): string;
     logout(req: any): any;
 }
