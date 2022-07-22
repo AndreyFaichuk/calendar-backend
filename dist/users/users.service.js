@@ -40,6 +40,11 @@ let UsersService = class UsersService {
         }
         throw new registered_exception_1.RegisteredException();
     }
+    async getVerifiedUser(userName) {
+        const username = userName.toLowerCase();
+        const user = await this.userModel.find({ username });
+        return user;
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

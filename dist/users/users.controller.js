@@ -31,8 +31,8 @@ let UsersController = class UsersController {
     login(req) {
         return req.user;
     }
-    getHello(req) {
-        return 'protected';
+    async getHello(req, userName) {
+        return await this.usersService.getVerifiedUser(userName);
     }
     logout(req) {
         req.session.destroy();
@@ -58,11 +58,12 @@ __decorate([
 ], UsersController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
-    (0, common_1.Get)('/protected'),
+    (0, common_1.Post)('/verify'),
     __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)('username')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getHello", null);
 __decorate([
     (0, common_1.Get)('/logout'),

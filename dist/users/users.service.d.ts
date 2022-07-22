@@ -9,4 +9,7 @@ export declare class UsersService {
     insertUser(userName: string, password: string, email: string): Promise<User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
+    getVerifiedUser(userName: string): Promise<(User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }
