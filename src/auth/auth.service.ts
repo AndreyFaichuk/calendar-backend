@@ -1,8 +1,8 @@
-import { Injectable, Logger, NotAcceptableException } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { LoginException } from '../exceptions/login.exception';
+import { Injectable, Logger, NotAcceptableException } from "@nestjs/common";
+import * as bcrypt from "bcrypt";
+import { LoginException } from "../exceptions/login.exception";
 
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class AuthService {
@@ -10,7 +10,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.getUser(username);
-    
+
     if (!user) throw new LoginException();
 
     const passwordValid = await bcrypt.compare(password, user.password);
@@ -20,7 +20,7 @@ export class AuthService {
         userId: user.id,
         username: user.username,
         email: user.email,
-        message: 'You successfully logged in!'
+        message: "You successfully logged in!",
       };
     }
 

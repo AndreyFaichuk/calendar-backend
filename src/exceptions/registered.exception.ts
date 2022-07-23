@@ -1,7 +1,7 @@
-import { HttpException } from '@nestjs/common';
+import { HttpException } from "@nestjs/common";
 
 export class RegisteredException extends HttpException {
-    constructor() {
-      super('User already registered!', 406);
-    }
+  constructor() {
+    super("User already registered!", 406);
   }
+}

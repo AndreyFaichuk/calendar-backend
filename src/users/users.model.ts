@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 export const UserSchema = new mongoose.Schema(
   {
@@ -14,10 +14,10 @@ export const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-    }
+    },
   },
   { timestamps: true }
-)
+);
 
 export interface User extends mongoose.Document {
   _id: string;
