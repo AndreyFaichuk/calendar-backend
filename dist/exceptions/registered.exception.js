@@ -4,7 +4,7 @@ exports.RegisteredException = void 0;
 const common_1 = require("@nestjs/common");
 class RegisteredException extends common_1.HttpException {
     constructor() {
-        super('User already registered!', 406);
+        super("User already registered!", 406);
     }
 }
 exports.RegisteredException = RegisteredException;

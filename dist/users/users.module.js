@@ -16,9 +16,7 @@ let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: "user", schema: users_model_1.UserSchema }])
-        ],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: "user", schema: users_model_1.UserSchema }])],
         providers: [users_service_1.UsersService],
         controllers: [users_controller_1.UsersController],
         exports: [users_service_1.UsersService],

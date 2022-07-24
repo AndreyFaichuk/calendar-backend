@@ -33,17 +33,34 @@ let UsersService = class UsersService {
             const newUser = new this.userModel({
                 username,
                 password,
-                email
+                email,
             });
             await newUser.save();
             return newUser;
         }
         throw new registered_exception_1.RegisteredException();
     }
+    async editUser(userId, data) {
+        const { username, email, age, avatar, gender, _id } = await this.userModel.findOneAndUpdate({ userId }, data, {
+            new: true,
+        });
+        return {
+            username,
+            email,
+            age,
+            avatar,
+            gender,
+            userId: _id,
+        };
+    }
+    async getUserById(id) {
+        const user = await this.userModel.findOne({ id });
+        return user;
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('user')),
+    __param(0, (0, mongoose_1.InjectModel)("user")),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], UsersService);
 exports.UsersService = UsersService;

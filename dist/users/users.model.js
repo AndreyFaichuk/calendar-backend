@@ -6,7 +6,6 @@ exports.UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
     },
     password: {
         type: String,
@@ -15,6 +14,18 @@ exports.UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-    }
+    },
+    gender: {
+        type: String,
+        required: false,
+    },
+    age: {
+        type: Number,
+        required: false,
+    },
+    avatar: {
+        type: String,
+        required: false,
+    },
 }, { timestamps: true });
 //# sourceMappingURL=users.model.js.map

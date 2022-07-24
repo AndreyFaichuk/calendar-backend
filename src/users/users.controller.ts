@@ -2,7 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Post,
+  Put,
   Request,
   UseGuards,
 } from "@nestjs/common";
@@ -11,6 +13,7 @@ import * as bcrypt from "bcrypt";
 import { UsersService } from "./users.service";
 import { AuthenticatedGuard } from "src/auth/authenticated.guard";
 import { LocalAuthGuard } from "../auth/local.auth.guard";
+import { UserUpdate } from "./users.model";
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -44,11 +47,26 @@ export class UsersController {
   //Get / protected
   @UseGuards(AuthenticatedGuard)
   @Get("/protected")
-  getHello(@Request() req): string {
-    return req.user;
+  async getHello(@Request() req) {
+    const user = await this.usersService.getUserById(req.user._id);
+
+    return user;
   }
 
-  //get / logout
+  //Put /edit
+  @UseGuards(AuthenticatedGuard)
+  @Put("/edit")
+  async editUser(@Request() req, @Body() body: UserUpdate) {
+    Logger.warn(req.user);
+
+    const updatedUser = await this.usersService.editUser(
+      req.user.username,
+      body
+    );
+    return updatedUser;
+  }
+
+  //get /logout
   @Get("/logout")
   logout(@Request() req): any {
     req.session.destroy();

@@ -4,7 +4,7 @@ exports.LoginException = void 0;
 const common_1 = require("@nestjs/common");
 class LoginException extends common_1.HttpException {
     constructor() {
-        super('User not found!', 406);
+        super("User not found!", 406);
     }
 }
 exports.LoginException = LoginException;

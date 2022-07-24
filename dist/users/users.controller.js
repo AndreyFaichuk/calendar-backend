@@ -26,31 +26,37 @@ let UsersController = class UsersController {
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(userName, hashedPassword, userEmail);
-        return { message: 'Successfully registered! Login now' };
+        return { message: "Successfully registered! Login now" };
     }
     login(req) {
         return req.user;
     }
-    getHello(req) {
-        return req.user;
+    async getHello(req) {
+        const user = await this.usersService.getUserById(req.user._id);
+        return user;
+    }
+    async editUser(req, body) {
+        common_1.Logger.warn(req.user);
+        const updatedUser = await this.usersService.editUser(req.user.username, body);
+        return updatedUser;
     }
     logout(req) {
         req.session.destroy();
-        return { message: 'The session has ended' };
+        return { message: "The session has ended" };
     }
 };
 __decorate([
-    (0, common_1.Post)('/registration'),
-    __param(0, (0, common_1.Body)('password')),
-    __param(1, (0, common_1.Body)('username')),
-    __param(2, (0, common_1.Body)('email')),
+    (0, common_1.Post)("/registration"),
+    __param(0, (0, common_1.Body)("password")),
+    __param(1, (0, common_1.Body)("username")),
+    __param(2, (0, common_1.Body)("email")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "addUser", null);
 __decorate([
     (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
-    (0, common_1.Post)('/login'),
+    (0, common_1.Post)("/login"),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -58,21 +64,30 @@ __decorate([
 ], UsersController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
-    (0, common_1.Get)('/protected'),
+    (0, common_1.Get)("/protected"),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", String)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getHello", null);
 __decorate([
-    (0, common_1.Get)('/logout'),
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
+    (0, common_1.Put)("/edit"),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "editUser", null);
+__decorate([
+    (0, common_1.Get)("/logout"),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Object)
 ], UsersController.prototype, "logout", null);
 UsersController = __decorate([
-    (0, common_1.Controller)('users'),
+    (0, common_1.Controller)("users"),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 exports.UsersController = UsersController;

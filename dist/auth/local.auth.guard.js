@@ -21,5 +21,4 @@ LocalAuthGuard = __decorate([
     (0, common_1.Injectable)()
 ], LocalAuthGuard);
 exports.LocalAuthGuard = LocalAuthGuard;
-;
 //# sourceMappingURL=local.auth.guard.js.map
