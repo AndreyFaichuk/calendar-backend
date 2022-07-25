@@ -15,8 +15,6 @@ export class AuthService {
 
     const passwordValid = await bcrypt.compare(password, user.password);
 
-    Logger.error(user);
-
     if (user && passwordValid) {
       return {
         age: user.age,

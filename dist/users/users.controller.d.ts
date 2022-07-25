@@ -6,9 +6,21 @@ export declare class UsersController {
     addUser(userPassword: string, userName: string, userEmail: string): Promise<{
         message: string;
     }>;
-    login(req: any): any;
-    getHello(req: any): Promise<import("./users.model").User & {
-        _id: import("mongoose").Types.ObjectId;
+    login(req: any): Promise<{
+        username: string;
+        email: string;
+        age: number;
+        avatar: string;
+        gender: string;
+        userId: string & import("mongoose").Types.ObjectId;
+    }>;
+    getHello(req: any): Promise<{
+        username: string;
+        email: string;
+        age: number;
+        avatar: string;
+        gender: string;
+        userId: string & import("mongoose").Types.ObjectId;
     }>;
     editUser(req: any, body: UserUpdate): Promise<{
         username: string;

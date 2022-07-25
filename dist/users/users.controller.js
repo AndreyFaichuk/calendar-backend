@@ -25,20 +25,17 @@ let UsersController = class UsersController {
     async addUser(userPassword, userName, userEmail) {
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
-        const result = await this.usersService.insertUser(userName, hashedPassword, userEmail);
+        await this.usersService.insertUser(userName, hashedPassword, userEmail);
         return { message: "Successfully registered! Login now" };
     }
-    login(req) {
-        return req.user;
+    async login(req) {
+        return await this.usersService.getUserById(req.user.userId);
     }
     async getHello(req) {
-        const user = await this.usersService.getUserById(req.user._id);
-        return user;
+        return await this.usersService.getUserById(req.user.userId);
     }
     async editUser(req, body) {
-        common_1.Logger.warn(req.user);
-        const updatedUser = await this.usersService.editUser(req.user.username, body);
-        return updatedUser;
+        return await this.usersService.editUser(req.user.userId, body);
     }
     logout(req) {
         req.session.destroy();
@@ -60,7 +57,7 @@ __decorate([
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),

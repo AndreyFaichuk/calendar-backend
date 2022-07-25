@@ -41,9 +41,8 @@ let UsersService = class UsersService {
         throw new registered_exception_1.RegisteredException();
     }
     async editUser(userId, data) {
-        const { username, email, age, avatar, gender, _id } = await this.userModel.findOneAndUpdate({ userId }, data, {
-            new: true,
-        });
+        const { username, email, age, avatar, gender, _id } = await this.userModel.findByIdAndUpdate(userId, data, { new: true })
+            .exec();
         return {
             username,
             email,
@@ -53,9 +52,16 @@ let UsersService = class UsersService {
             userId: _id,
         };
     }
-    async getUserById(id) {
-        const user = await this.userModel.findOne({ id });
-        return user;
+    async getUserById(userId) {
+        const { username, email, age, avatar, gender, _id } = await this.userModel.findById(userId);
+        return {
+            username,
+            email,
+            age,
+            avatar,
+            gender,
+            userId: _id,
+        };
     }
 };
 UsersService = __decorate([

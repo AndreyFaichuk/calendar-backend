@@ -28,42 +28,36 @@ export class UsersController {
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
 
-    const result = await this.usersService.insertUser(
+    await this.usersService.insertUser(
       userName,
       hashedPassword,
       userEmail
     );
-
     return { message: "Successfully registered! Login now" };
   }
 
   @UseGuards(LocalAuthGuard)
   //post /login
   @Post("/login")
-  login(@Request() req): any {
-    return req.user;
+  async login(@Request() req) {
+    return await this.usersService.getUserById(req.user.userId)
   }
 
   //Get / protected
   @UseGuards(AuthenticatedGuard)
   @Get("/protected")
   async getHello(@Request() req) {
-    const user = await this.usersService.getUserById(req.user._id);
-
-    return user;
+    return await this.usersService.getUserById(req.user.userId)
   }
 
   //Put /edit
   @UseGuards(AuthenticatedGuard)
   @Put("/edit")
   async editUser(@Request() req, @Body() body: UserUpdate) {
-    Logger.warn(req.user);
-
-    const updatedUser = await this.usersService.editUser(
-      req.user.username,
+    return await this.usersService.editUser(
+      req.user.userId,
       body
     );
-    return updatedUser;
   }
 
   //get /logout

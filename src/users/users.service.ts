@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { RegisteredException } from "src/exceptions/registered.exception";
 import { User, UserUpdate } from "./users.model";
 @Injectable()
@@ -36,10 +36,8 @@ export class UsersService {
   }
 
   async editUser(userId: string, data: UserUpdate) {
-    const { username, email, age, avatar, gender, _id } =
-      await this.userModel.findOneAndUpdate({ userId }, data, {
-        new: true,
-      });
+    const { username, email, age, avatar, gender, _id } = await this.userModel.findByIdAndUpdate(userId , data, { new: true })
+    .exec();
 
     return {
       username,
@@ -51,9 +49,17 @@ export class UsersService {
     };
   }
 
-  async getUserById(id: string) {
-    const user = await this.userModel.findOne({ id });
+  async getUserById(userId: string) {
+    const { username, email, age, avatar, gender, _id } = await this.userModel.findById(userId);
 
-    return user;
+    return {
+      username,
+      email,
+      age,
+      avatar,
+      gender,
+      userId: _id,
+    };
   }
+
 }
