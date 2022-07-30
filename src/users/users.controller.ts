@@ -2,18 +2,28 @@ import {
   Body,
   Controller,
   Get,
-  Logger,
+  Param,
   Post,
   Put,
   Request,
+  Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 import { UsersService } from "./users.service";
 import { AuthenticatedGuard } from "src/auth/authenticated.guard";
 import { LocalAuthGuard } from "../auth/local.auth.guard";
 import { UserUpdate } from "./users.model";
+import { storage } from "./helpers";
+import { join } from "path";
+
+import { diskStorage } from "multer";
+import * as path from "path";
+import { v4 as uuidv4 } from "uuid";
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -60,6 +70,24 @@ export class UsersController {
     );
   }
 
+  //Post /avatar
+  @UseGuards(AuthenticatedGuard)
+  @Post("/avatar")
+  @UseInterceptors(FileInterceptor('file', storage))
+  async uploadFile(@UploadedFile() file, @Request() req)  {
+    return await this.usersService.editUser(
+      req.user.userId,
+      { avatar: file.filename } as any
+    );
+  }
+
+   //Get /avatar
+   @UseGuards(AuthenticatedGuard)
+   @Get("/avatar/:avatarName")
+   async findAvatar(@Param('avatarName') avatarName, @Res() res)  { 
+     return res.sendFile(join(process.cwd(), './uploads/avatars/' + avatarName))
+   }
+  
   //get /logout
   @Get("/logout")
   logout(@Request() req): any {

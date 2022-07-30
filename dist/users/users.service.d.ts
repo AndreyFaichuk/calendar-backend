@@ -13,7 +13,7 @@ export declare class UsersService {
         username: string;
         email: string;
         age: number;
-        avatar: string;
+        avatar: any;
         gender: string;
         userId: string & Types.ObjectId;
     }>;
@@ -21,7 +21,7 @@ export declare class UsersService {
         username: string;
         email: string;
         age: number;
-        avatar: string;
+        avatar: any;
         gender: string;
         userId: string & Types.ObjectId;
     }>;

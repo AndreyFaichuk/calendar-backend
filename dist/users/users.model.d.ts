@@ -14,12 +14,12 @@ export interface User extends mongoose.Document {
     email: string;
     gender?: string;
     age?: number;
-    avatar?: string;
+    avatar?: any;
 }
 export interface UserUpdate extends mongoose.Document {
     username?: string;
     email?: string;
     gender?: string;
     age?: number;
-    avatar?: string;
+    avatar?: any;
 }

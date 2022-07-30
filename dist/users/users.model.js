@@ -26,7 +26,7 @@ exports.UserSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        required: false,
-    },
+        required: false
+    }
 }, { timestamps: true });
 //# sourceMappingURL=users.model.js.map

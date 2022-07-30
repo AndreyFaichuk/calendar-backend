@@ -22,7 +22,7 @@ AppModule = __decorate([
             }),
             mongoose_1.MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.uvp2e.mongodb.net/?retryWrites=true&w=majority`),
             users_module_1.UsersModule,
-            auth_module_1.AuthModule,
+            auth_module_1.AuthModule
         ],
         controllers: [],
         providers: [],

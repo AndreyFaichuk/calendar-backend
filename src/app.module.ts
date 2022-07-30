@@ -4,6 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 
 import { UsersModule } from "./users/users.module";
 import { AuthModule } from "./auth/auth.module";
+import { MulterModule } from "@nestjs/platform-express";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -13,7 +14,7 @@ import { AuthModule } from "./auth/auth.module";
       `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.uvp2e.mongodb.net/?retryWrites=true&w=majority`
     ),
     UsersModule,
-    AuthModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],

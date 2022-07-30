@@ -25,8 +25,8 @@ export const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: false,
-    },
+      required: false
+    }
   },
   { timestamps: true }
 );
@@ -38,7 +38,7 @@ export interface User extends mongoose.Document {
   email: string;
   gender?: string;
   age?: number;
-  avatar?: string;
+  avatar?: any;
 }
 
 export interface UserUpdate extends mongoose.Document {
@@ -46,5 +46,5 @@ export interface UserUpdate extends mongoose.Document {
   email?: string;
   gender?: string;
   age?: number;
-  avatar?: string;
+  avatar?: any;
 }

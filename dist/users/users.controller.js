@@ -15,9 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
+const platform_express_1 = require("@nestjs/platform-express");
 const users_service_1 = require("./users.service");
 const authenticated_guard_1 = require("../auth/authenticated.guard");
 const local_auth_guard_1 = require("../auth/local.auth.guard");
+const helpers_1 = require("./helpers");
+const path_1 = require("path");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -36,6 +39,13 @@ let UsersController = class UsersController {
     }
     async editUser(req, body) {
         return await this.usersService.editUser(req.user.userId, body);
+    }
+    async uploadFile(file, req) {
+        console.log(file);
+        return await this.usersService.editUser(req.user.userId, { avatar: file.filename });
+    }
+    async findAvatar(avatarName, res) {
+        return res.sendFile((0, path_1.join)(process.cwd(), './uploads/avatars/' + avatarName));
     }
     logout(req) {
         req.session.destroy();
@@ -76,6 +86,25 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "editUser", null);
+__decorate([
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
+    (0, common_1.Post)("/avatar"),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', helpers_1.storage)),
+    __param(0, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "uploadFile", null);
+__decorate([
+    (0, common_1.UseGuards)(authenticated_guard_1.AuthenticatedGuard),
+    (0, common_1.Get)("/avatar/:avatarName"),
+    __param(0, (0, common_1.Param)('avatarName')),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "findAvatar", null);
 __decorate([
     (0, common_1.Get)("/logout"),
     __param(0, (0, common_1.Request)()),
